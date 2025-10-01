@@ -76,5 +76,14 @@ const calculate = (operator, a, b) => {
         case '+':
             console.log(operator, a, b)
             return add(a, b)
+        case '-':
+            console.log(operator, a, b)
+            return subtract(a, b)
+        case '*':
+            console.log(operator, a, b)
+            return multiply(a, b)
+        case '/':
+            console.log(operator, a, b)
+            return divide(a, b)
     }
 }
