@@ -1,56 +1,57 @@
 'use strict'
 
 /*-------------------------------- Constants --------------------------------*/
+
+/*-------------------------------- Variables --------------------------------*/
+// important: currentNumber must be a string.
+let currentNumber = ''
+
+let numberA = 0
+let numberB = 0
+
+let operation = ''
+/*------------------------ Cached Element References ------------------------*/
 const buttons = document.querySelectorAll('.button')
 const calculator = document.querySelector('#calculator');
 const display = document.querySelector('.display');
 
-/*-------------------------------- Variables --------------------------------*/
-let currentNum = ''
-let num1 = 0
-let num2 = 0
-
-let operation = ''
-/*------------------------ Cached Element References ------------------------*/
-
 /*----------------------------- Event Listeners -----------------------------*/
 calculator.addEventListener('click', (event) => {
-    // This log is for testing purposes to verify we're getting the correct value
-    // You have to click a button to see this log
-    //console.log(event.target.innerText);
 
-    // numbers
+    // handle numbers
     if (event.target.classList.contains('number')) {
-        // console.log(event.target.innerText)
-        // display.innerHTML += event.target.innerText
-        let num = event.target.innerText
-        // console.log(num)
-        display.innerHTML += num
 
-        currentNum += num
-        // console.log(currentNum)
-      
-    
- 
+        let thisNumber = event.target.innerText
+        display.innerHTML += thisNumber
+
+        currentNumber += thisNumber
+
     }
 
-    // operations
+    // handle operations
     if (event.target.classList.contains('operator')) {
-        console.log('operator...')
-        display.innerHTML += event.target.innerText
-        num1 = parseInt(currentNum)
-        console.log(num1)
-        currentNum = ''
-        operation = event.target.innerText
+
+        let operator = event.target.innerText
+        display.innerHTML += operator
+
+        numberA = parseInt(currentNumber)
+
+        currentNumber = ''
+        operation = operator
+
     }
 
-    // calculate
+    // handle calculation
     if (event.target.innerText === '=') {
-        num2 = parseInt(currentNum)
-        currentNum = ''
-        const result = calculate(operation, num1, num2)
+
+        numberB = parseInt(currentNumber)
+        currentNumber = ''
+
+        const result = calculate(operation, numberA, numberB)
         display.innerHTML = result
+
     }
+
 });
 
 /*-------------------------------- Functions --------------------------------*/
