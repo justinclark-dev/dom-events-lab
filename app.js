@@ -15,6 +15,36 @@ const buttons = document.querySelectorAll('.button')
 const calculator = document.querySelector('#calculator');
 const display = document.querySelector('.display');
 
+/*-------------------------------- Functions --------------------------------*/
+const add = (a, b) => {
+    return a + b
+}
+
+const subtract = (a, b) => {
+    return a - b
+}
+
+const multiply = (a, b) => {
+    return a * b
+}
+
+const divide = (a, b) => {
+    return a / b
+}
+
+const calculate = (operator, a, b) => {
+    switch (operator) {
+        case '+':
+            return add(a, b)
+        case '-':
+            return subtract(a, b)
+        case '*':
+            return multiply(a, b)
+        case '/':
+            return divide(a, b)
+    }
+}
+
 /*----------------------------- Event Handlers -----------------------------*/
 const handleNumbers = (event) => {
     let thisNumber = event.target.innerText
@@ -30,23 +60,26 @@ const handleOperations = (event) => {
         numberA = 0
         numberB = 0
         operation = ''
+        lastOperation = ''
         display.innerHTML = ''
-        
     } else {
-
+        if (lastOperation) {
+            numberB = parseInt(currentNumber)
+            const result = calculate(operation, numberA, numberB)
+            currentNumber = result
+            numberA = 0
+            display.innerHTML = result
+        }
         display.innerHTML += operator
-
         numberA = parseInt(currentNumber)
-        
         currentNumber = ''
         operation = operator
     }
-    
+    lastOperation = operator
 }
 
 const handleCalculation = (event) => {
     numberB = parseInt(currentNumber)
-    console.log(`calc: numberB: ${numberB}`)
     const result = calculate(operation, numberA, numberB)
     currentNumber = result
     numberA = 0
@@ -72,36 +105,4 @@ calculator.addEventListener('click', (event) => {
 
 });
 
-/*-------------------------------- Functions --------------------------------*/
-const add = (a, b) => {
-    return a + b
-}
 
-const subtract = (a, b) => {
-    return a - b
-}
-
-const multiply = (a, b) => {
-    return a * b
-}
-
-const divide = (a, b) => {
-    return a / b
-}
-
-const calculate = (operator, a, b) => {
-    switch (operator) {
-        case '+':
-            console.log(operator, a, b)
-            return add(a, b)
-        case '-':
-            console.log(operator, a, b)
-            return subtract(a, b)
-        case '*':
-            console.log(operator, a, b)
-            return multiply(a, b)
-        case '/':
-            console.log(operator, a, b)
-            return divide(a, b)
-    }
-}
