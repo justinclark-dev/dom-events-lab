@@ -5,62 +5,69 @@
 /*-------------------------------- Variables --------------------------------*/
 // important: currentNumber must be a string.
 let currentNumber = ''
-
 let numberA = 0
 let numberB = 0
-
 let operation = ''
+let lastOperation = ''
+
 /*------------------------ Cached Element References ------------------------*/
 const buttons = document.querySelectorAll('.button')
 const calculator = document.querySelector('#calculator');
 const display = document.querySelector('.display');
 
+/*----------------------------- Event Handlers -----------------------------*/
+const handleNumbers = (event) => {
+    let thisNumber = event.target.innerText
+    display.innerHTML += thisNumber
+    currentNumber += thisNumber
+}
+
+const handleOperations = (event) => {
+    let operator = event.target.innerText
+
+    if (operator === 'C') {
+        currentNumber = ''
+        numberA = 0
+        numberB = 0
+        operation = ''
+        display.innerHTML = ''
+        
+    } else {
+
+        display.innerHTML += operator
+
+        numberA = parseInt(currentNumber)
+        
+        currentNumber = ''
+        operation = operator
+    }
+    
+}
+
+const handleCalculation = (event) => {
+    numberB = parseInt(currentNumber)
+    console.log(`calc: numberB: ${numberB}`)
+    const result = calculate(operation, numberA, numberB)
+    currentNumber = result
+    numberA = 0
+    numberB = 0
+    operation = ''
+    lastOperation = ''
+    display.innerHTML = result
+}
 /*----------------------------- Event Listeners -----------------------------*/
 calculator.addEventListener('click', (event) => {
 
-    // handle numbers
     if (event.target.classList.contains('number')) {
-
-        let thisNumber = event.target.innerText
-        display.innerHTML += thisNumber
-
-        currentNumber += thisNumber
-
+        handleNumbers(event)
     }
 
-    // handle operations
     if (event.target.classList.contains('operator')) {
-
-        let operator = event.target.innerText
-
-        if (operator === 'C') {
-            currentNumber = ''
-            numberA = 0
-            numberB = 0
-            operation = ''
-            display.innerHTML = ''
-            
-        } else {
-
-            display.innerHTML += operator
-
-            numberA = parseInt(currentNumber)
-
-            currentNumber = ''
-            operation = operator
-        }
-        
+        handleOperations(event)
     }
 
-    // handle calculation
     if (event.target.innerText === '=') {
-
-        numberB = parseInt(currentNumber)
-        currentNumber = ''
-
-        const result = calculate(operation, numberA, numberB)
-        display.innerHTML = result
-
+        handleCalculation(event)
     }
 
 });
