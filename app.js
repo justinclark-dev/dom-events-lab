@@ -32,13 +32,24 @@ calculator.addEventListener('click', (event) => {
     if (event.target.classList.contains('operator')) {
 
         let operator = event.target.innerText
-        display.innerHTML += operator
 
-        numberA = parseInt(currentNumber)
+        if (operator === 'C') {
+            currentNumber = ''
+            numberA = 0
+            numberB = 0
+            operation = ''
+            display.innerHTML = ''
+            
+        } else {
 
-        currentNumber = ''
-        operation = operator
+            display.innerHTML += operator
 
+            numberA = parseInt(currentNumber)
+
+            currentNumber = ''
+            operation = operator
+        }
+        
     }
 
     // handle calculation
