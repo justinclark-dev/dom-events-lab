@@ -63,6 +63,10 @@ const handleOperations = (event) => {
         lastOperation = ''
         display.innerHTML = ''
     } else {
+        if (currentNumber === '') {
+            // prevents using operator before number
+            return
+        }
         if (lastOperation) {
             numberB = parseInt(currentNumber)
             const result = calculate(operation, numberA, numberB)
